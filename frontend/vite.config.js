@@ -1,20 +1,19 @@
 import { defineConfig } from 'vite';
-import path from 'path';
 
 export default defineConfig({
-  root: 'frontend',
-  publicDir: path.resolve(__dirname, 'sample_scenes'),   // serves /concession_fallback.ply
+  root: '.',
+  publicDir: '../sample_scenes',
   server: {
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://lyra2nvidia-production.up.railway.app',
         changeOrigin: true,
       },
     },
   },
   build: {
-    outDir: '../dist',
+    outDir: 'dist',
     emptyOutDir: true,
   },
 });
