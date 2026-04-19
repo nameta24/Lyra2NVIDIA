@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventPulse — Venue Intelligence AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══ SCANLINES OVERLAY ══════════════════════════════════════════════════ -->
+  <div id="scanlines"></div>
+
+  <!-- ══ UPLOAD SCREEN ══════════════════════════════════════════════════════ -->
+  <section id="upload-screen" class="screen active">
+    <div class="upload-bg-grid"></div>
+
+    <header class="brand-header">
+      <div class="brand-logo">
+        <span class="logo-pulse"></span>
+        <span class="logo-text">EVENT<span class="accent">PULSE</span></span>
+      </div>
+      <div class="brand-tagline">VENUE INTELLIGENCE AI</div>
+    </header>
+
+    <div class="upload-center">
+      <div class="upload-eyebrow">POWERED BY NVIDIA LYRA 2.0</div>
+      <h1 class="upload-headline">
+        Drop a Photo.<br/>
+        <span class="accent">Explore a World.</span>
+      </h1>
+      <p class="upload-sub">
+        Upload any venue photograph — our AI reconstructs a fully explorable<br/>
+        3D environment in minutes, ready for cinematic flyover and live walk-through.
+      </p>
+
+      <div id="drop-zone" class="drop-zone">
+        <input type="file" id="file-input" accept="image/*" hidden />
+        <div class="drop-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4L24 32M24 4L14 14M24 4L34 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 36V40C6 41.1 6.9 42 8 42H40C41.1 42 42 41.1 42 40V36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="drop-main">Drag &amp; Drop Venue Photo</div>
+        <div class="drop-sub">or <button id="browse-btn" class="inline-btn">browse files</button></div>
+        <div class="drop-formats">JPEG · PNG · WEBP · up to 20 MB</div>
+      </div>
+
+      <div class="capability-row">
+        <div class="cap-item"><span class="cap-dot green"></span>Golf Courses</div>
+        <div class="cap-item"><span class="cap-dot cyan"></span>Stadiums</div>
+        <div class="cap-item"><span class="cap-dot green"></span>Arenas</div>
+        <div class="cap-item"><span class="cap-dot cyan"></span>Event Venues</div>
+        <div class="cap-item"><span class="cap-dot green"></span>Race Tracks</div>
+      </div>
+    </div>
+
+    <footer class="upload-footer">
+      <span>© 2026 EventPulse Inc.</span>
+      <span class="footer-sep">·</span>
+      <span>Venue Intelligence Platform</span>
+      <span class="footer-sep">·</span>
+      <span>GPU Processing via Modal</span>
+    </footer>
+  </section>
+
+  <!-- ══ PROCESSING SCREEN ══════════════════════════════════════════════════ -->
+  <section id="processing-screen" class="screen">
+    <div class="proc-bg"></div>
+
+    <div class="proc-center">
+      <div class="proc-venue-preview">
+        <img id="preview-img" src="" alt="venue" />
+        <div class="proc-venue-overlay"></div>
+      </div>
+
+      <div class="proc-info">
+        <div class="proc-eyebrow">NVIDIA LYRA 2.0 · A100 GPU</div>
+        <h2 class="proc-headline">Generating 3D World</h2>
+        <div class="proc-filename" id="proc-filename">venue.jpg</div>
+
+        <div class="progress-block">
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-fill"></div>
+          </div>
+          <div class="progress-labels">
+            <span id="progress-pct">0%</span>
+            <span id="progress-stage">Initialising GPU…</span>
+          </div>
+        </div>
+
+        <div class="proc-steps">
+          <div class="proc-step" id="step-0"><span class="step-dot"></span>Loading Lyra weights</div>
+          <div class="proc-step" id="step-1"><span class="step-dot"></span>Depth estimation</div>
+          <div class="proc-step" id="step-2"><span class="step-dot"></span>Point cloud reconstruction</div>
+          <div class="proc-step" id="step-3"><span class="step-dot"></span>Scene normalisation</div>
+          <div class="proc-step" id="step-4"><span class="step-dot"></span>Streaming to browser</div>
+        </div>
+
+        <div class="proc-eta">Estimated time: <strong>3–4 minutes</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VIEWER SCREEN ══════════════════════════════════════════════════════ -->
+  <section id="viewer-screen" class="screen">
+    <canvas id="three-canvas"></canvas>
+
+    <!-- HUD injected by hud.js -->
+    <div id="hud-root"></div>
+  </section>
+
+  <!-- ══ THREE.JS (CDN) ════════════════════════════════════════════════════ -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module" src="viewer.js"></script>
+</body>
+</html>
