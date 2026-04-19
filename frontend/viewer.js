@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
 import { initHUD, updateHUD } from './hud.js';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = 'https://lyra2nvidia-production.up.railway.app';
 
 // ── DOM refs ──────────────────────────────────────────────────────────────
 const uploadScreen    = document.getElementById('upload-screen');
