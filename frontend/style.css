@@ -161,7 +161,28 @@ html, body {
   text-decoration: underline; padding: 0;
 }
 
-/* capability row */
+/* demo launch button */
+.demo-launch-row { display: flex; justify-content: center; }
+.demo-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(74,222,128,0.07);
+  border: 1px solid rgba(74,222,128,0.3);
+  color: var(--green);
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: 2px;
+  padding: 14px 36px; border-radius: 6px; cursor: pointer;
+  transition: all 0.2s;
+}
+.demo-btn:hover {
+  background: rgba(74,222,128,0.14);
+  border-color: var(--green);
+  box-shadow: 0 0 24px rgba(74,222,128,0.15);
+}
+.demo-btn-sub {
+  font-size: 10px; letter-spacing: 1px; color: var(--text-dim);
+  font-family: var(--font-body);
+}
+
+/* demo launch button */
 .capability-row {
   display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;
 }

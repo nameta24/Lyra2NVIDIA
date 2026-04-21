@@ -103,7 +103,8 @@ fi
 
 # ── 7. Start servers ──────────────────────────────────────────────────────────
 info "Starting backend (port 8000)…"
-(cd backend && source ../.venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port 8000 --reload) &
+# Run uvicorn from the project root so relative paths resolve correctly
+(source .venv/bin/activate && PYTHONPATH=. uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload) &
 BACKEND_PID=$!
 success "Backend PID: $BACKEND_PID"
 

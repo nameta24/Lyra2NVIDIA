@@ -7,7 +7,10 @@ import * as THREE from 'three';
 import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
 import { initHUD, updateHUD } from './hud.js';
 
-const API_BASE = 'https://lyra2nvidia-production.up.railway.app';
+// Auto-detect: same origin in production, localhost:8000 in dev
+const API_BASE = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE)
+  ? import.meta.env.VITE_API_BASE
+  : (location.hostname === 'localhost' ? 'http://localhost:8000' : '');
 
 // ── DOM refs ──────────────────────────────────────────────────────────────
 const uploadScreen    = document.getElementById('upload-screen');
@@ -48,6 +51,22 @@ let sceneCenter= new THREE.Vector3();
 let sceneBounds= { min: new THREE.Vector3(), max: new THREE.Vector3() };
 
 // ── Upload / drag-drop ────────────────────────────────────────────────────
+// Demo button — skip upload, go straight to fallback scene
+document.getElementById('demo-btn')?.addEventListener('click', () => {
+  procFilename.textContent = 'demo_scene.ply';
+  previewImg.src = '';
+  switchScreen(uploadScreen, processingScreen);
+  updateProgressUI(15);
+  setTimeout(() => updateProgressUI(50), 800);
+  setTimeout(() => updateProgressUI(85), 1600);
+  setTimeout(async () => {
+    demoMode = true;
+    switchScreen(processingScreen, viewerScreen);
+    initThree();
+    loadPLYFromUrl(`${API_BASE}/api/demo-scene`);
+  }, 2400);
+});
+
 browseBtn.addEventListener('click', () => fileInput.click());
 dropZone .addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', e => handleFile(e.target.files[0]));

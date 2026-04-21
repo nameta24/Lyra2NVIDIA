@@ -1,0 +1,16 @@
+# railway.toml — deploy to Railway.app with one command
+# Free tier gives you $5/month credit — enough for demos
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "uvicorn backend.main:app --host 0.0.0.0 --port $PORT --workers 2"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "eventpulse-backend"

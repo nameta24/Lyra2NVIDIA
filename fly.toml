@@ -1,0 +1,37 @@
+# fly.toml — deploy backend to Fly.io
+# Run: fly launch (first time) or fly deploy (updates)
+
+app = "eventpulse-venue"
+primary_region = "iad"      # US East — change to nearest: ord, dfw, lax, lhr, etc.
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8000"
+
+[http_service]
+  internal_port       = 8000
+  force_https         = true
+  auto_stop_machines  = true
+  auto_start_machines = true
+  min_machines_running = 0     # Scale to zero when idle (saves cost)
+
+  [http_service.concurrency]
+    type       = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus     = 1
+  memory   = "512mb"
+
+# Increase timeouts — Lyra inference takes ~3-4 min
+[http_service.checks]
+  [http_service.checks.alive]
+    grace_period = "10s"
+    interval     = "15s"
+    method       = "GET"
+    path         = "/api/health"
+    timeout      = "10s"
